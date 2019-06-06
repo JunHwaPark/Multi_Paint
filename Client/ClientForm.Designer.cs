@@ -48,10 +48,10 @@
             this.btn_faceColor = new System.Windows.Forms.ToolStripButton();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.panel_board = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.txt_Chat = new System.Windows.Forms.TextBox();
+            this.txt_Input = new System.Windows.Forms.TextBox();
+            this.btn_Send = new System.Windows.Forms.Button();
+            this.panel_board = new Client.DoubleBufferPanel();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -147,7 +147,7 @@
             // 
             this.item_line1.Image = global::Client.Properties.Resources.line1Button;
             this.item_line1.Name = "item_line1";
-            this.item_line1.Size = new System.Drawing.Size(214, 56);
+            this.item_line1.Size = new System.Drawing.Size(81, 22);
             this.item_line1.Text = "1";
             this.item_line1.Click += new System.EventHandler(this.Item_line_Click);
             // 
@@ -155,7 +155,7 @@
             // 
             this.item_line2.Image = global::Client.Properties.Resources.line2Button;
             this.item_line2.Name = "item_line2";
-            this.item_line2.Size = new System.Drawing.Size(214, 56);
+            this.item_line2.Size = new System.Drawing.Size(81, 22);
             this.item_line2.Text = "2";
             this.item_line2.Click += new System.EventHandler(this.Item_line_Click);
             // 
@@ -163,7 +163,7 @@
             // 
             this.item_line3.Image = global::Client.Properties.Resources.line3Button;
             this.item_line3.Name = "item_line3";
-            this.item_line3.Size = new System.Drawing.Size(214, 56);
+            this.item_line3.Size = new System.Drawing.Size(81, 22);
             this.item_line3.Text = "3";
             this.item_line3.Click += new System.EventHandler(this.Item_line_Click);
             // 
@@ -171,7 +171,7 @@
             // 
             this.item_line4.Image = global::Client.Properties.Resources.line4Button;
             this.item_line4.Name = "item_line4";
-            this.item_line4.Size = new System.Drawing.Size(214, 56);
+            this.item_line4.Size = new System.Drawing.Size(81, 22);
             this.item_line4.Text = "4";
             this.item_line4.Click += new System.EventHandler(this.Item_line_Click);
             // 
@@ -179,18 +179,20 @@
             // 
             this.item_line5.Image = global::Client.Properties.Resources.line5Button;
             this.item_line5.Name = "item_line5";
-            this.item_line5.Size = new System.Drawing.Size(214, 56);
+            this.item_line5.Size = new System.Drawing.Size(81, 22);
             this.item_line5.Text = "5";
             this.item_line5.Click += new System.EventHandler(this.Item_line_Click);
             // 
             // btn_Fill
             // 
+            this.btn_Fill.BackColor = System.Drawing.Color.White;
             this.btn_Fill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.btn_Fill.Image = ((System.Drawing.Image)(resources.GetObject("btn_Fill.Image")));
             this.btn_Fill.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btn_Fill.Name = "btn_Fill";
             this.btn_Fill.Size = new System.Drawing.Size(47, 47);
             this.btn_Fill.Text = "채우기";
+            this.btn_Fill.Click += new System.EventHandler(this.Btn_Fill_Click);
             // 
             // btn_lineColor
             // 
@@ -200,19 +202,19 @@
             this.btn_lineColor.Image = ((System.Drawing.Image)(resources.GetObject("btn_lineColor.Image")));
             this.btn_lineColor.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btn_lineColor.Name = "btn_lineColor";
-            this.btn_lineColor.Size = new System.Drawing.Size(47, 51);
+            this.btn_lineColor.Size = new System.Drawing.Size(47, 47);
             this.btn_lineColor.Text = "         ";
             this.btn_lineColor.Click += new System.EventHandler(this.Btn_FillColor_Click);
             // 
             // btn_faceColor
             // 
-            this.btn_faceColor.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.btn_faceColor.BackColor = System.Drawing.Color.Gray;
             this.btn_faceColor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.btn_faceColor.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btn_faceColor.Image = ((System.Drawing.Image)(resources.GetObject("btn_faceColor.Image")));
             this.btn_faceColor.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btn_faceColor.Name = "btn_faceColor";
-            this.btn_faceColor.Size = new System.Drawing.Size(47, 51);
+            this.btn_faceColor.Size = new System.Drawing.Size(47, 47);
             this.btn_faceColor.Text = "         ";
             this.btn_faceColor.Click += new System.EventHandler(this.Btn_FillColor_Click);
             // 
@@ -233,6 +235,34 @@
             this.imageList1.Images.SetKeyName(10, "원.jpg");
             this.imageList1.Images.SetKeyName(11, "직선.jpg");
             // 
+            // txt_Chat
+            // 
+            this.txt_Chat.Location = new System.Drawing.Point(0, 390);
+            this.txt_Chat.Multiline = true;
+            this.txt_Chat.Name = "txt_Chat";
+            this.txt_Chat.ReadOnly = true;
+            this.txt_Chat.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txt_Chat.Size = new System.Drawing.Size(800, 120);
+            this.txt_Chat.TabIndex = 2;
+            // 
+            // txt_Input
+            // 
+            this.txt_Input.Location = new System.Drawing.Point(0, 510);
+            this.txt_Input.Name = "txt_Input";
+            this.txt_Input.Size = new System.Drawing.Size(740, 21);
+            this.txt_Input.TabIndex = 3;
+            this.txt_Input.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Txt_Input_KeyDown);
+            // 
+            // btn_Send
+            // 
+            this.btn_Send.Location = new System.Drawing.Point(740, 510);
+            this.btn_Send.Name = "btn_Send";
+            this.btn_Send.Size = new System.Drawing.Size(60, 23);
+            this.btn_Send.TabIndex = 4;
+            this.btn_Send.Text = "Say";
+            this.btn_Send.UseVisualStyleBackColor = true;
+            this.btn_Send.Click += new System.EventHandler(this.Btn_Send_Click);
+            // 
             // panel_board
             // 
             this.panel_board.BackColor = System.Drawing.Color.White;
@@ -240,43 +270,29 @@
             this.panel_board.Name = "panel_board";
             this.panel_board.Size = new System.Drawing.Size(800, 340);
             this.panel_board.TabIndex = 1;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(0, 390);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(800, 120);
-            this.textBox1.TabIndex = 2;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(0, 510);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(740, 21);
-            this.textBox2.TabIndex = 3;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(740, 510);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(60, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.panel_board.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Panel_board_Scroll);
+            this.panel_board.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel_board_Paint);
+            this.panel_board.Enter += new System.EventHandler(this.Panel_board_Enter);
+            this.panel_board.Leave += new System.EventHandler(this.Panel_board_Leave);
+            this.panel_board.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel_board_MouseDown);
+            this.panel_board.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Panel_board_MouseMove);
+            this.panel_board.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Panel_board_MouseUp);
+            //this.panel_board.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.Panel_board_MouseWheel);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 531);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.btn_Send);
+            this.Controls.Add(this.txt_Input);
+            this.Controls.Add(this.txt_Chat);
             this.Controls.Add(this.panel_board);
             this.Controls.Add(this.toolStrip);
             this.Name = "Form1";
             this.Text = "세계그림판";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -304,10 +320,10 @@
         private System.Windows.Forms.ToolStripMenuItem item_line3;
         private System.Windows.Forms.ToolStripMenuItem item_line4;
         private System.Windows.Forms.ToolStripMenuItem item_line5;
-        private System.Windows.Forms.Panel panel_board;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button button1;
+        private Client.DoubleBufferPanel panel_board;
+        private System.Windows.Forms.TextBox txt_Chat;
+        private System.Windows.Forms.TextBox txt_Input;
+        private System.Windows.Forms.Button btn_Send;
     }
 }
 

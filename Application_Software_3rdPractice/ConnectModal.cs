@@ -17,9 +17,11 @@ namespace Application_Software_3rdPractice
             InitializeComponent();
         }
 
-        private void ConnectModal_Load(object sender, EventArgs e)
+        private void Btn_Server_Click(object sender, EventArgs e)
         {
-
+            ServerForm.ip = txt_ip.Text;
+            ServerForm.port = txt_port.Text;
+            this.Close();
         }
     }
 }

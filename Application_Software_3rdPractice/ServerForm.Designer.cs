@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel_Board = new System.Windows.Forms.Panel();
+            this.panel_Board = new Application_Software_3rdPractice.DoubleBufferPanel();
             this.txt_Chat = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
@@ -39,12 +39,15 @@
             this.panel_Board.Name = "panel_Board";
             this.panel_Board.Size = new System.Drawing.Size(800, 340);
             this.panel_Board.TabIndex = 0;
+            this.panel_Board.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel_Board_Paint);
             // 
             // txt_Chat
             // 
             this.txt_Chat.Location = new System.Drawing.Point(0, 340);
             this.txt_Chat.Multiline = true;
             this.txt_Chat.Name = "txt_Chat";
+            this.txt_Chat.ReadOnly = true;
+            this.txt_Chat.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txt_Chat.Size = new System.Drawing.Size(800, 110);
             this.txt_Chat.TabIndex = 1;
             // 
@@ -57,6 +60,7 @@
             this.Controls.Add(this.panel_Board);
             this.Name = "ServerForm";
             this.Text = "세계그림판_서버";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ServerForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -64,7 +68,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panel_Board;
+        private DoubleBufferPanel panel_Board;
         private System.Windows.Forms.TextBox txt_Chat;
     }
 }

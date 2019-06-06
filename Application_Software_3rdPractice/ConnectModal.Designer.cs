@@ -57,6 +57,7 @@
             this.btn_Server.TabIndex = 2;
             this.btn_Server.Text = "서버 열기";
             this.btn_Server.UseVisualStyleBackColor = true;
+            this.btn_Server.Click += new System.EventHandler(this.Btn_Server_Click);
             // 
             // ConnectModal
             // 
@@ -68,7 +69,6 @@
             this.Controls.Add(this.txt_ip);
             this.Name = "ConnectModal";
             this.Text = "세계그림판서버";
-            this.Load += new System.EventHandler(this.ConnectModal_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

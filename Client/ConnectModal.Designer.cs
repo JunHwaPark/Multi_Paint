@@ -32,7 +32,7 @@
             this.txt_port = new System.Windows.Forms.TextBox();
             this.txt_ip = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txt_id = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btn_Server
@@ -43,6 +43,7 @@
             this.btn_Server.TabIndex = 5;
             this.btn_Server.Text = "서버 열기";
             this.btn_Server.UseVisualStyleBackColor = true;
+            this.btn_Server.Click += new System.EventHandler(this.Btn_Server_Click);
             // 
             // txt_port
             // 
@@ -69,19 +70,20 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "ID";
             // 
-            // textBox1
+            // txt_id
             // 
-            this.textBox1.Location = new System.Drawing.Point(36, 39);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(178, 21);
-            this.textBox1.TabIndex = 7;
+            this.txt_id.Location = new System.Drawing.Point(36, 39);
+            this.txt_id.Name = "txt_id";
+            this.txt_id.Size = new System.Drawing.Size(178, 21);
+            this.txt_id.TabIndex = 7;
+            this.txt_id.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Txt_id_KeyDown);
             // 
             // ConnectModal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(228, 105);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txt_id);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btn_Server);
             this.Controls.Add(this.txt_port);
@@ -99,6 +101,6 @@
         private System.Windows.Forms.TextBox txt_port;
         private System.Windows.Forms.TextBox txt_ip;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txt_id;
     }
 }
