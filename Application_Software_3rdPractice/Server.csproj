@@ -52,6 +52,14 @@
     <Compile Include="ConnectModal.Designer.cs">
       <DependentUpon>ConnectModal.cs</DependentUpon>
     </Compile>
+    <Compile Include="panel_data.cs">
+      <DependentUpon>panel_data.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="panel_data.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>panel_data.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ServerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +84,17 @@
     <EmbeddedResource Include="ServerForm.resx">
       <DependentUpon>ServerForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="panel_data.xsc">
+      <DependentUpon>panel_data.xsd</DependentUpon>
+    </None>
+    <None Include="panel_data.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>panel_data.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="panel_data.xss">
+      <DependentUpon>panel_data.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

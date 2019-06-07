@@ -20,7 +20,9 @@ namespace Application_Software_3rdPractice
     {
         public static string ip, port;
         public Thread m_thServer = null;
-        Bitmap bmp = new Bitmap("C:/Users/junhwa/source/repos/Application_Software_3rdPractice/Client/bin/Debug/abc.bmp");
+        panel_data.ShapeDataTable shapeRows = new panel_data.ShapeDataTable();
+        DataRow dr;
+        //Bitmap bmp = new Bitmap("C:/Users/junhwa/source/repos/Application_Software_3rdPractice/Client/bin/Debug/abc.bmp");
 
         public List<Shape> shapes = new List<Shape>();
 
@@ -33,6 +35,45 @@ namespace Application_Software_3rdPractice
         public ServerForm()
         {
             InitializeComponent();
+            shapeRows.ReadXml("panel_data.xml");
+            
+            foreach(var item in shapeRows)
+            {
+                Shape shape;
+                if (item.Shape.Equals("Line"))
+                {
+                    MyLine myLine = new MyLine();
+                    myLine.setPoint(new Point(item.x1, item.y1), new Point(item.x2, item.y2),
+                        new Pen(Color.FromArgb(item.Color), item.thick));
+                    shape = myLine;
+                }
+                else if (item.Shape.Equals("Circle"))
+                {
+                    MyCircle myCircle = new MyCircle();
+                    myCircle.setRectC(new Point(item.x1, item.y1),
+                        new Point(item.x1 + item.x2, item.y1 + item.y2),
+                        new Pen(Color.FromArgb(item.Color), item.thick),
+                        new SolidBrush(Color.FromArgb(item.Brush)));
+                    shape = myCircle;
+                }
+                else// if (item.Shape.Equals("Rectangle"))
+                {
+                    MyRect myRect = new MyRect();
+                    myRect.setRect(new Point(item.x1, item.y1),
+                        new Point(item.x1 + item.x2, item.y1 + item.y2),
+                        new Pen(Color.FromArgb(item.Color), item.thick),
+                        new SolidBrush(Color.FromArgb(item.Brush)));
+                    shape = myRect;
+                }
+                shapes.Add(shape);
+            }
+
+            //shapeRows.Rows.Add(dr);
+            //txt_Chat.AppendText(shapeRows.Last().Shape);
+            //shapeRows.Rows.Add(dr);
+            //txt_Chat.AppendText(shapeRows[0].Shape);
+            //txt_Chat.AppendText(shapeRows[0].x1.ToString());
+
             ConnectModal connectModal = new ConnectModal();
             connectModal.ShowDialog();
 
@@ -53,21 +94,16 @@ namespace Application_Software_3rdPractice
             while (m_bStop)
             {
                 TcpClient hClient = m_listener.AcceptTcpClient();
-
-
                 if (hClient.Connected)
                 {
                     for (int i = 0; i < 10; i++)
                     {
                         if (!serverThreads[i].m_bConnect)
                         {
-                            index = i;
-                            break;
+                            index = i; break;
                         }
                     }
-                    txt_Chat.AppendText(index + "\r\n");
                     serverThreads[index].m_bConnect = true;
-
                     serverThreads[index].m_Stream = hClient.GetStream();
                     serverThreads[index].m_Read = new StreamReader(serverThreads[index].m_Stream);
                     serverThreads[index].m_Write = new StreamWriter(serverThreads[index].m_Stream);
@@ -99,6 +135,11 @@ namespace Application_Software_3rdPractice
         }
         public void all_Send_Line(int x1, int y1, int x2, int y2, int thick, int Argb)
         {
+            dr = shapeRows.NewRow();
+            dr[0] = "Line";
+            dr[1] = x1; dr[2] = y1; dr[3] = x2; dr[4] = y2;
+            dr[5] = thick; dr[6] = Argb;
+            shapeRows.Rows.Add(dr);
             for (int i = 0; i < 10; i++)
             {
                 if (serverThreads[i].m_bConnect)
@@ -108,6 +149,11 @@ namespace Application_Software_3rdPractice
 
         public void all_Send_Circle(int x1, int y1, int wid, int hei, int thick, int Argb, int brush)
         {
+            dr = shapeRows.NewRow();
+            dr[0] = "Circle";
+            dr[1] = x1; dr[2] = y1; dr[3] = wid; dr[4] = hei;
+            dr[5] = thick; dr[6] = Argb; dr[7] = brush;
+            shapeRows.Rows.Add(dr);
             for (int i = 0; i < 10; i++)
             {
                 if (serverThreads[i].m_bConnect)
@@ -117,6 +163,11 @@ namespace Application_Software_3rdPractice
 
         public void all_Send_Rectangle(int x1, int y1, int wid, int hei, int thick, int Argb, int brush)
         {
+            dr = shapeRows.NewRow();
+            dr[0] = "Rectangle";
+            dr[1] = x1; dr[2] = y1; dr[3] = wid; dr[4] = hei;
+            dr[5] = thick; dr[6] = Argb; dr[7] = brush;
+            shapeRows.Rows.Add(dr);
             for (int i = 0; i < 10; i++)
             {
                 if (serverThreads[i].m_bConnect)
@@ -137,30 +188,18 @@ namespace Application_Software_3rdPractice
         }
         private void Panel_Board_Paint(object sender, PaintEventArgs e)
         {
-            //bmp = new Bitmap("C:/Users/junhwa/source/repos/Application_Software_3rdPractice/Client/bin/Debug/abc.bmp");
-            //bmp = new Bitmap(panel_Board.Width, panel_Board.Height, e.Graphics);
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            //e.Graphics.DrawImageUnscaled(bmp, 0, 0);
             foreach (var sh in shapes)
                 sh.DrawShape(e);
-            //MemoryStream ms = new MemoryStream();
-
-
-
-            //panel_Board.DrawToBitmap(bmp, panel_Board.Bounds);
-            //bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-            //byte[] buf = ms.ToArray();
-            //txt_Chat.AppendText(buf.ToString() + "\r\n");
-            //for (int i = 0; i < 10; i++)
-            //    if (serverThreads[i].m_bConnect)
-            //        serverThreads[i].Send_Bmp(bmp);
-
         }
 
         public void Draw()
         {
-            panel_Board.Invalidate(false);
-            panel_Board.Update();
+            this.Invoke(new Action(delegate ()
+            {
+                panel_Board.Invalidate(false);
+                panel_Board.Update();
+            }));
         }
 
         private void ServerForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -179,6 +218,7 @@ namespace Application_Software_3rdPractice
                     serverThreads[i].m_thReader.Abort();
                 }
             }
+            shapeRows.WriteXml("panel_data.xml");
         }
     }
 
@@ -203,7 +243,7 @@ namespace Application_Software_3rdPractice
 
         public void Receive()
         {
-            string Request = null;
+            string Request;
             while (m_bConnect)
             {
                 Request = m_Read.ReadLine();
@@ -319,23 +359,6 @@ namespace Application_Software_3rdPractice
             m_Write.WriteLine(Argb);
             m_Write.WriteLine(brush);
             m_Write.Flush();
-        }
-
-        public void Send_Bmp(Bitmap bmp)
-        {
-            //ms = new MemoryStream();
-            //bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-            //byte[] result = new byte[ms.Length];
-            //ms.Seek(0, SeekOrigin.Begin);
-            //ms.fl
-
-            //SendMessage(result.Length.ToString());
-
-            //m_Write.WriteLine("Bitmap");
-            //m_Write.WriteLine(result.Length);
-            //m_Write.Flush();
-            //m_bWrite.Write(result, 0, result.Length);
-            //m_bWrite.Flush();
         }
     }
 
